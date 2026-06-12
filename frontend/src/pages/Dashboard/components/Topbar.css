@@ -1,0 +1,109 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  height: var(--topbar-height);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 12px;
+  z-index: 90;
+  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.sidebar-collapsed .topbar {
+  left: var(--sidebar-collapsed-width);
+}
+
+.topbar-menu-btn {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+.topbar-menu-btn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.topbar-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.topbar-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+}
+
+.topbar-btn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--bg);
+}
+
+.topbar-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #FFFFFF;
+  font-size: 10.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.03em;
+  cursor: default;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    left: 0 !important;
+    padding: 0 16px;
+  }
+
+  .topbar-menu-btn {
+    display: flex;
+  }
+}

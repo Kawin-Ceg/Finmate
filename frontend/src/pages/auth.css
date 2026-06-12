@@ -1,0 +1,390 @@
+/* ── Shared auth layout ── */
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: #FFFFFF;
+}
+
+/* ── Dark panel (left) ── */
+
+.auth-panel {
+  flex: 0 0 58%;
+  background: #07111F;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.032) 1px, transparent 1px);
+  background-size: 28px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 80px;
+}
+
+.panel-content {
+  max-width: 500px;
+  width: 100%;
+}
+
+.panel-header {
+  margin-bottom: 56px;
+}
+
+.panel-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-word {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.3px;
+}
+
+.panel-hero {
+  margin-bottom: 52px;
+}
+
+.panel-heading {
+  font-size: 38px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.15;
+  letter-spacing: -0.6px;
+  margin-bottom: 14px;
+}
+
+.panel-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #64748B;
+}
+
+/* ── Step list (replaces feature cards) ── */
+
+.panel-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.panel-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.step-number {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #2563EB;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  padding: 3px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-family: var(--font, 'Inter', sans-serif);
+  line-height: 1.4;
+}
+
+.step-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #E2E8F0;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.step-desc {
+  font-size: 13px;
+  color: #566880;
+  line-height: 1.5;
+}
+
+/* ── Form panel (right) ── */
+
+.auth-form-side {
+  flex: 0 0 42%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: #FFFFFF;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-card-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.auth-card-title {
+  font-size: 23px;
+  font-weight: 700;
+  color: #0A0A0B;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+
+.auth-card-subtitle {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+/* ── Form ── */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.field-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #111827;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+
+.field-input::placeholder {
+  color: #9CA3AF;
+}
+
+.field-input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.field-input.input-error {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.07);
+}
+
+/* ── Password field ── */
+
+.password-field {
+  position: relative;
+}
+
+.password-field .field-input {
+  padding-right: 60px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  transition: color 0.12s;
+}
+
+.toggle-password:hover {
+  color: #111827;
+}
+
+/* ── Password strength ── */
+
+.strength-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 3px;
+  background: #E5E7EB;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  min-width: 52px;
+  text-align: right;
+}
+
+/* ── Error messages ── */
+
+.error-msg {
+  font-size: 12px;
+  color: #DC2626;
+  margin-top: 2px;
+}
+
+.form-error {
+  padding: 10px 12px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 6px;
+  color: #DC2626;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ── Terms checkbox ── */
+
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #4B5563;
+  line-height: 1.4;
+}
+
+.terms input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #2563EB;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Submit button ── */
+
+.submit-btn {
+  width: 100%;
+  padding: 11px 20px;
+  background: #0A0A0B;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  margin-top: 2px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #1F2937;
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Switch link ── */
+
+.auth-switch {
+  text-align: center;
+  margin-top: 26px;
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.auth-switch a {
+  color: #2563EB;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  color: #1D4ED8;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 1024px) {
+  .auth-panel {
+    padding: 56px 48px;
+  }
+  .panel-heading {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column-reverse;
+  }
+
+  .auth-panel {
+    flex: none;
+    padding: 48px 28px;
+  }
+
+  .auth-form-side {
+    flex: none;
+    padding: 40px 24px;
+  }
+
+  .panel-heading {
+    font-size: 28px;
+  }
+
+  .panel-hero {
+    margin-bottom: 36px;
+  }
+
+  .panel-steps {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-panel {
+    padding: 40px 20px;
+  }
+
+  .auth-form-side {
+    padding: 32px 20px;
+  }
+}

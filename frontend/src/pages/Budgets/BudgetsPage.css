@@ -1,0 +1,158 @@
+/* ── Section wrapper ── */
+
+.bpage-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bpage-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.bpage-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin: 0 0 3px;
+}
+
+.bpage-section-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Add Budget button ── */
+
+.bpage-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.bpage-add-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* ── Budget cards grid ── */
+
+.bpage-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ── Skeleton ── */
+
+@keyframes bpage-shimmer {
+  0%   { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
+}
+
+.bc-skeleton {
+  height: 192px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, #F1F5F9 25%, #E8EEF4 50%, #F1F5F9 75%);
+  background-size: 500px 100%;
+  animation: bpage-shimmer 1.4s ease infinite;
+}
+
+/* ── Error ── */
+
+.bpage-error {
+  font-size: 13px;
+  color: var(--red);
+  padding: 10px 14px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: var(--radius-sm);
+  margin: 0;
+}
+
+/* ── Empty state ── */
+
+.bpage-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 64px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.bpage-empty-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.bpage-empty-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.bpage-empty-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+  max-width: 340px;
+  line-height: 1.55;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 1200px) {
+  .bpage-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .bpage-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bpage-add-btn {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .bpage-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

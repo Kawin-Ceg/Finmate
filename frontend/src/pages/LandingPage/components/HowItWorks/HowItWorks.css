@@ -1,0 +1,139 @@
+.hiw {
+  padding: 96px 24px;
+  background: #FFFFFF;
+}
+
+.hiw-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hiw-header {
+  text-align: center;
+  margin-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.hiw-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  font-family: 'Inter', sans-serif;
+  max-width: 560px;
+  margin: 0;
+}
+
+.hiw-sub {
+  font-size: 17px;
+  color: #64748B;
+  line-height: 1.65;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  max-width: 480px;
+}
+
+.hiw-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hiw-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 24px;
+}
+
+.hiw-step-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hiw-step-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  border: 2px solid #BFDBFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #2563EB;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.hiw-step-line {
+  flex: 1;
+  width: 1px;
+  background: #E2E8F0;
+  margin: 8px 0;
+  min-height: 40px;
+}
+
+.hiw-step-content {
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hiw-step:last-child .hiw-step-content {
+  padding-bottom: 0;
+}
+
+.hiw-step-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding-top: 8px;
+}
+
+.hiw-step-desc {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.65;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+}
+
+.hiw-step-detail {
+  font-size: 13px;
+  color: #94A3B8;
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .hiw {
+    padding: 72px 20px;
+  }
+
+  .hiw-title {
+    font-size: 32px;
+  }
+
+  .hiw-step {
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+  }
+
+  .hiw-step-num {
+    width: 34px;
+    height: 34px;
+    font-size: 11px;
+  }
+}

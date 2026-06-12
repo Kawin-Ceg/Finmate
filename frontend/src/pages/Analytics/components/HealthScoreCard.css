@@ -1,0 +1,127 @@
+.health-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.health-card-header {
+  margin-bottom: 20px;
+}
+
+.health-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.health-card-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.health-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.health-ring-wrap {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  flex-shrink: 0;
+}
+
+.health-ring {
+  width: 100%;
+  height: 100%;
+}
+
+.health-ring-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.health-ring-score {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-family: var(--font);
+}
+
+.health-ring-grade {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-family: var(--font);
+  min-height: 18px;
+}
+
+.health-status-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.health-breakdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding-top: 2px;
+}
+
+.health-bd-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.health-bd-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 130px;
+}
+
+.health-bd-track {
+  flex: 1;
+  height: 4px;
+  background: #F1F5F9;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.health-bd-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.health-bd-score {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  min-width: 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

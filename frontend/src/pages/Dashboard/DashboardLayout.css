@@ -1,0 +1,31 @@
+.dashboard-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.dashboard-main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  min-width: 0;
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.sidebar-collapsed .dashboard-main {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 99;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+}

@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 64px;
+  --topbar-height: 60px;
+
+  --sidebar-bg: #0F172A;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+
+  --text: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --primary: #2563EB;
+  --primary-light: #EFF6FF;
+  --primary-hover: #1D4ED8;
+
+  --green: #10B981;
+  --green-light: #ECFDF5;
+  --yellow: #F59E0B;
+  --yellow-light: #FFFBEB;
+  --red: #EF4444;
+  --red-light: #FEF2F2;
+  --purple: #8B5CF6;
+  --purple-light: #F5F3FF;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+
+  --radius-sm: 5px;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+/* ── Dark Mode ─────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --border: #2D3F55;
+  --border-strong: #3D5068;
+
+  --text: #F1F5F9;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
+
+  --primary: #3B82F6;
+  --primary-light: #1E3A5F;
+  --primary-hover: #2563EB;
+
+  --green: #34D399;
+  --green-light: #052E16;
+  --yellow: #FBBF24;
+  --yellow-light: #431407;
+  --red: #F87171;
+  --red-light: #450A0A;
+  --purple: #A78BFA;
+  --purple-light: #2D1B69;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: var(--font);
+}
+
+input, textarea, select {
+  font-family: var(--font);
+}

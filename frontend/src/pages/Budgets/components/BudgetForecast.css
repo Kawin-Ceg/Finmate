@@ -1,0 +1,117 @@
+.forecast-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.forecast-header {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.forecast-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin: 0 0 2px;
+}
+
+.forecast-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.forecast-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.forecast-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.forecast-table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.forecast-table th {
+  padding: 10px 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--bg);
+}
+
+.forecast-table th:first-child {
+  text-align: left;
+}
+
+.forecast-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+.forecast-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.forecast-table tbody tr:hover {
+  background: var(--bg);
+}
+
+.forecast-table td {
+  padding: 12px 20px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ta-right  { text-align: right; }
+.ta-center { text-align: center; }
+
+.ft-cat {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.ft-num {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.ft-over {
+  color: var(--red) !important;
+  font-weight: 600;
+}
+
+.ft-overrun-val {
+  color: var(--red);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ft-ok {
+  color: var(--text-muted);
+}
+
+.ft-badge {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.forecast-note {
+  padding: 10px 20px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  margin: 0;
+}

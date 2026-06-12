@@ -1,0 +1,118 @@
+{
+  "algorithm": "XGBoost",
+  "accuracy": 0.691,
+  "categories": [
+    "Cash",
+    "Education",
+    "Entertainment",
+    "Food",
+    "Health",
+    "Income",
+    "Insurance",
+    "Investment",
+    "Other",
+    "Rent",
+    "Shopping",
+    "Subscriptions",
+    "Transfers",
+    "Transport",
+    "Utilities"
+  ],
+  "num_categories": 15,
+  "num_training_samples": 711,
+  "num_test_samples": 178,
+  "trained_at": "2026-06-08T14:10:17.755655Z",
+  "dataset_path": "D:\\Finmate\\finmate\\backend\\data\\transactions_train.csv",
+  "per_class_metrics": {
+    "Cash": {
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1_score": 0.889,
+      "support": 8
+    },
+    "Education": {
+      "precision": 0.857,
+      "recall": 0.667,
+      "f1_score": 0.75,
+      "support": 9
+    },
+    "Entertainment": {
+      "precision": 0.636,
+      "recall": 0.583,
+      "f1_score": 0.609,
+      "support": 12
+    },
+    "Food": {
+      "precision": 0.792,
+      "recall": 0.826,
+      "f1_score": 0.809,
+      "support": 23
+    },
+    "Health": {
+      "precision": 0.667,
+      "recall": 0.462,
+      "f1_score": 0.545,
+      "support": 13
+    },
+    "Income": {
+      "precision": 0.889,
+      "recall": 0.727,
+      "f1_score": 0.8,
+      "support": 11
+    },
+    "Insurance": {
+      "precision": 0.909,
+      "recall": 0.909,
+      "f1_score": 0.909,
+      "support": 11
+    },
+    "Investment": {
+      "precision": 1.0,
+      "recall": 0.778,
+      "f1_score": 0.875,
+      "support": 9
+    },
+    "Other": {
+      "precision": 0.333,
+      "recall": 0.286,
+      "f1_score": 0.308,
+      "support": 7
+    },
+    "Rent": {
+      "precision": 0.833,
+      "recall": 0.625,
+      "f1_score": 0.714,
+      "support": 8
+    },
+    "Shopping": {
+      "precision": 0.579,
+      "recall": 0.647,
+      "f1_score": 0.611,
+      "support": 17
+    },
+    "Subscriptions": {
+      "precision": 0.467,
+      "recall": 0.7,
+      "f1_score": 0.56,
+      "support": 10
+    },
+    "Transfers": {
+      "precision": 0.75,
+      "recall": 0.667,
+      "f1_score": 0.706,
+      "support": 9
+    },
+    "Transport": {
+      "precision": 0.519,
+      "recall": 0.824,
+      "f1_score": 0.636,
+      "support": 17
+    },
+    "Utilities": {
+      "precision": 0.778,
+      "recall": 0.5,
+      "f1_score": 0.609,
+      "support": 14
+    }
+  }
+}

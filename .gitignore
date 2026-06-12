@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# Environment variables — NEVER commit secrets
+backend/.env
+.env
+*.env
+
+# Database
+*.db
+*.sqlite3
+
+# Uploaded user files
+backend/static/avatars/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.sw?
+
+# ML model artifacts (large binary files)
+backend/app/ml/*.pkl
+backend/app/ml/*.joblib
+
+# Jupyter
+.ipynb_checkpoints/

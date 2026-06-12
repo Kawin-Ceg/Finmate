@@ -1,0 +1,80 @@
+.ab-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  background: #fff8f0;
+  border: 1px solid #fed7aa;
+  border-left: 3px solid #f97316;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.ab-banner--urgent {
+  background: #fff1f1;
+  border-color: #fecaca;
+  border-left-color: #ef4444;
+}
+
+.ab-icon {
+  display: flex;
+  align-items: center;
+  color: #f97316;
+  flex-shrink: 0;
+}
+
+.ab-banner--urgent .ab-icon {
+  color: #ef4444;
+}
+
+.ab-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.ab-headline {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ab-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ab-chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+.ab-chip--critical { background: #fee2e2; color: #b91c1c; }
+.ab-chip--high     { background: #ffedd5; color: #c2410c; }
+.ab-chip--medium   { background: #fef9c3; color: #92400e; }
+.ab-chip--low      { background: #dbeafe; color: #1e40af; }
+
+.ab-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.ab-cta:hover {
+  opacity: 0.75;
+}
