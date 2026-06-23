@@ -34,11 +34,8 @@ _cors_origins_env = os.getenv("CORS_ORIGINS", "").strip()
 
 if _cors_origins_env:
     CORS_ORIGINS = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
-elif ENVIRONMENT == "production":
-    CORS_ORIGINS = []
-    logger.warning("ENVIRONMENT=production but CORS_ORIGINS is not set — all cross-origin requests will be blocked.")
 else:
-    CORS_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    CORS_ORIGINS = ["*"]
 
 STATIC_DIR = Path(__file__).parent / "static"
 STATIC_DIR.mkdir(exist_ok=True)
@@ -106,7 +103,7 @@ app = FastAPI(title="FinMate API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
-    allow_credentials=True,
+    allow_credentials=CORS_ORIGINS != ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
