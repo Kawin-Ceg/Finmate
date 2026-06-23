@@ -21,7 +21,7 @@ _vectorizer = None
 _label_encoder = None
 _model_info: Optional[dict] = None
 
-CONFIDENCE_THRESHOLD = 0.60
+CONFIDENCE_THRESHOLD = 0.50
 
 # Strip common bank-statement prefixes before inference
 _PREFIX_RE = re.compile(

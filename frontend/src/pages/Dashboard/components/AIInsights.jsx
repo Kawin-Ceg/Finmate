@@ -1,63 +1,72 @@
-import { TrendingUp, Calendar, CheckCircle, Smartphone } from 'lucide-react';
+import { AlertTriangle, Target, TrendingDown, TrendingUp, PiggyBank, Brain } from 'lucide-react';
 import './AIInsights.css';
 
-const INSIGHTS = [
-  {
-    type: 'warning',
-    icon: TrendingUp,
-    title: 'Food delivery up 18%',
-    description:
-      'Your food delivery spending increased by 18% compared to last month. Consider cooking at home more often to meet your budget.',
-  },
-  {
-    type: 'info',
-    icon: Calendar,
-    title: 'Weekend spending pattern',
-    description:
-      'Weekend expenses account for 42% of your discretionary spending. Most of this is concentrated on Saturday afternoons.',
-  },
-  {
-    type: 'success',
-    icon: CheckCircle,
-    title: 'Transportation on track',
-    description:
-      'Your transportation spending is 38% below budget this month — ₹1,900 saved. Great discipline.',
-  },
-  {
-    type: 'warning',
-    icon: Smartphone,
-    title: 'Review your subscriptions',
-    description:
-      '7 active subscriptions totalling ₹2,847/month detected. Removing unused ones could save ₹2,300 monthly.',
-  },
-];
+const TYPE_CONFIG = {
+  risk:        { icon: AlertTriangle, accent: 'red',    label: 'Risk'        },
+  warning:     { icon: Target,        accent: 'yellow',  label: 'Warning'     },
+  info:        { icon: Brain,         accent: 'blue',    label: 'Insight'     },
+  opportunity: { icon: TrendingDown,  accent: 'green',   label: 'Opportunity' },
+  success:     { icon: TrendingUp,    accent: 'green',   label: 'Positive'    },
+};
 
-export default function AIInsights() {
+function BriefingItem({ item }) {
+  const cfg = TYPE_CONFIG[item.type] || TYPE_CONFIG.info;
+  const Icon = cfg.icon;
   return (
-    <div className="insights-card">
-      <div className="insights-header">
-        <div className="insights-header-label">
-          <span className="insights-badge">AI</span>
-          <h2 className="insights-title">AI Insights</h2>
+    <div className={`briefing-item briefing-item--${cfg.accent}`}>
+      <div className={`briefing-item-icon briefing-item-icon--${cfg.accent}`}>
+        <Icon size={13} strokeWidth={2} />
+      </div>
+      <div className="briefing-item-body">
+        <div className="briefing-item-meta">
+          <span className={`briefing-item-tag briefing-item-tag--${cfg.accent}`}>{item.label}</span>
         </div>
-        <p className="insights-subtitle">Personalized for June 2025</p>
+        <span className="briefing-item-title">{item.title}</span>
+        <p className="briefing-item-desc">{item.body}</p>
+      </div>
+    </div>
+  );
+}
+
+function SkeletonItem() {
+  return (
+    <div className="briefing-item briefing-item--skeleton">
+      <div className="briefing-skeleton-icon" />
+      <div className="briefing-skeleton-body">
+        <div className="briefing-skeleton-tag" />
+        <div className="briefing-skeleton-title" />
+        <div className="briefing-skeleton-desc" />
+      </div>
+    </div>
+  );
+}
+
+export default function AIInsights({ loading, items = [] }) {
+  const today = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  return (
+    <div className="briefing-card">
+      <div className="briefing-header">
+        <div>
+          <div className="briefing-header-row">
+            <span className="briefing-badge">AI</span>
+            <h2 className="briefing-title">Mate's Daily Briefing</h2>
+          </div>
+          <p className="briefing-subtitle">{today} · Generated from your data</p>
+        </div>
       </div>
 
-      <div className="insights-list">
-        {INSIGHTS.map((item, i) => {
-          const Icon = item.icon;
-          return (
-            <div key={i} className={`insight-item insight-item--${item.type}`}>
-              <div className={`insight-icon insight-icon--${item.type}`}>
-                <Icon size={14} strokeWidth={2} />
-              </div>
-              <div className="insight-body">
-                <span className="insight-item-title">{item.title}</span>
-                <p className="insight-desc">{item.description}</p>
-              </div>
-            </div>
-          );
-        })}
+      <div className="briefing-list">
+        {loading ? (
+          Array.from({ length: 4 }).map((_, i) => <SkeletonItem key={i} />)
+        ) : items.length === 0 ? (
+          <div className="briefing-empty">
+            <Brain size={28} strokeWidth={1.5} />
+            <p>Upload transactions to get personalized insights.</p>
+          </div>
+        ) : (
+          items.map((item, i) => <BriefingItem key={i} item={item} />)
+        )}
       </div>
     </div>
   );

@@ -32,9 +32,11 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import accuracy_score, classification_report
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report, f1_score
+from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from sklearn.pipeline import FeatureUnion
 from sklearn.preprocessing import LabelEncoder
 
@@ -120,54 +122,46 @@ def train(dataset_path: Path) -> dict:
     df = load_dataset(dataset_path)
     df["cleaned"] = df["merchant_name"].apply(clean_merchant)
 
-    X = df["cleaned"].values
     le = LabelEncoder()
     y = le.fit_transform(df["category"].values)
 
-    min_class_count = df["category"].value_counts().min()
-    test_size = 0.2 if min_class_count >= 5 else 0.15
+    # Use group-aware split when brand column is present (v2 dataset onwards).
+    # This matches the evaluation protocol used in Phase 3/4 benchmarks and
+    # produces a test accuracy that reflects generalization to unseen merchants.
+    if "brand" in df.columns:
+        splitter = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+        train_idx, test_idx = next(splitter.split(df, groups=df["brand"]))
+        X_train = df["cleaned"].values[train_idx]
+        X_test = df["cleaned"].values[test_idx]
+        y_train = y[train_idx]
+        y_test = y[test_idx]
+        split_type = "group-aware (brand-held-out)"
+    else:
+        X_train, X_test, y_train, y_test = train_test_split(
+            df["cleaned"].values, y, test_size=0.2, random_state=42, stratify=y
+        )
+        split_type = "stratified random"
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=42, stratify=y
-    )
-    logger.info("Train: %d  |  Test: %d", len(X_train), len(X_test))
+    logger.info("Train: %d  |  Test: %d  |  Split: %s", len(X_train), len(X_test), split_type)
 
     vectorizer = build_vectorizer()
-    logger.info("Fitting TF-IDF vectorizer …")
+    logger.info("Fitting TF-IDF vectorizer ...")
     X_train_vec = vectorizer.fit_transform(X_train)
     X_test_vec = vectorizer.transform(X_test)
 
-    try:
-        from xgboost import XGBClassifier
-
-        clf = XGBClassifier(
-            n_estimators=300,
-            max_depth=6,
-            learning_rate=0.1,
-            subsample=0.8,
-            colsample_bytree=0.8,
-            eval_metric="mlogloss",
-            random_state=42,
-            n_jobs=-1,
-            verbosity=0,
-        )
-        algorithm = "XGBoost"
-        logger.info("Training XGBoost (n_estimators=300) …")
-    except ImportError:
-        from sklearn.ensemble import RandomForestClassifier
-
-        clf = RandomForestClassifier(
-            n_estimators=300,
-            random_state=42,
-            n_jobs=-1,
-        )
-        algorithm = "RandomForest"
-        logger.info("XGBoost not found — training RandomForest (n_estimators=300) …")
+    # Phase 4 benchmark winner: LogisticRegression outperforms XGBoost, LightGBM,
+    # and RandomForest on macro F1 (group-aware 5-fold CV) on this sparse TF-IDF
+    # feature space. Wrapped with Platt calibration for reliable confidence scores.
+    base_clf = LogisticRegression(max_iter=2000, random_state=42)
+    clf = CalibratedClassifierCV(base_clf, cv=3, method="sigmoid")
+    algorithm = "LogisticRegression+PlattCalibration"
+    logger.info("Training LogisticRegression with Platt calibration ...")
 
     clf.fit(X_train_vec, y_train)
 
     y_pred = clf.predict(X_test_vec)
     acc = float(accuracy_score(y_test, y_pred))
+    macro_f1 = float(f1_score(y_test, y_pred, average="macro", zero_division=0))
     report_dict = classification_report(
         y_test, y_pred, target_names=le.classes_, output_dict=True, zero_division=0
     )
@@ -176,9 +170,8 @@ def train(dataset_path: Path) -> dict:
     )
 
     logger.info("\n%s", report_str)
-    logger.info("Overall accuracy: %.4f  (%.2f%%)", acc, acc * 100)
+    logger.info("Accuracy: %.4f (%.2f%%)  |  Macro F1: %.4f", acc, acc * 100, macro_f1)
 
-    # Persist artifacts
     joblib.dump(clf, MODELS_DIR / "transaction_model.pkl")
     joblib.dump(vectorizer, MODELS_DIR / "vectorizer.pkl")
     joblib.dump(le, MODELS_DIR / "label_encoder.pkl")
@@ -186,7 +179,10 @@ def train(dataset_path: Path) -> dict:
 
     training_report = {
         "algorithm": algorithm,
+        "model_version": "v2",
         "accuracy": round(acc, 4),
+        "macro_f1": round(macro_f1, 4),
+        "split_type": split_type,
         "categories": list(le.classes_),
         "num_categories": int(len(le.classes_)),
         "num_training_samples": int(len(X_train)),
@@ -220,9 +216,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset",
         type=Path,
-        default=DATA_DIR / "transactions_train.csv",
-        help="Path to training CSV (columns: merchant_name, category). "
-        f"Default: {DATA_DIR / 'transactions_train.csv'}",
+        default=DATA_DIR / "transactions_train_v2.csv",
+        help="Path to training CSV (columns: merchant_name, category[, brand]). "
+        f"Default: {DATA_DIR / 'transactions_train_v2.csv'}",
     )
     args = parser.parse_args()
 
@@ -233,12 +229,13 @@ if __name__ == "__main__":
 
     report = train(args.dataset)
 
-    print(f"\n{'='*50}")
+    print(f"\n{'='*55}")
     print(f"  Algorithm  : {report['algorithm']}")
-    print(f"  Accuracy   : {report['accuracy'] * 100:.2f}%")
+    print(f"  Accuracy   : {report['accuracy'] * 100:.2f}%  (split: {report['split_type']})")
+    print(f"  Macro F1   : {report['macro_f1']:.4f}")
     print(f"  Categories : {report['num_categories']}")
     print(f"  Train size : {report['num_training_samples']}")
     print(f"  Test size  : {report['num_test_samples']}")
-    print(f"{'='*50}")
+    print(f"{'='*55}")
     print(f"\nModel saved to: {MODELS_DIR}")
     print("Restart the backend server to load the new model.")

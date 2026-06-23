@@ -1,87 +1,95 @@
-.insights-card {
+.briefing-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(37,99,235,0.08), var(--shadow-md);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
-.insights-header {
+.briefing-header {
   padding: 18px 20px 14px;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, transparent 60%);
 }
 
-.insights-header-label {
+.briefing-header-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 3px;
+  gap: 9px;
 }
 
-.insights-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 7px;
-  background: var(--primary-light);
+.briefing-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   color: var(--primary);
-  font-size: 10.5px;
-  font-weight: 700;
+  background: var(--primary-light);
+  padding: 2px 8px;
   border-radius: 4px;
-  letter-spacing: 0.04em;
+  border: 1px solid rgba(37,99,235,0.15);
 }
 
-.insights-title {
+.briefing-title {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
-.insights-subtitle {
-  font-size: 12.5px;
+.briefing-subtitle {
+  font-size: 11.5px;
   color: var(--text-muted);
+  margin-top: 4px;
 }
 
-.insights-list {
-  padding: 8px 12px 12px;
+.briefing-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   flex: 1;
-  overflow-y: auto;
 }
 
-.insight-item {
+.briefing-item {
   display: flex;
-  gap: 12px;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  border-left: 3px solid transparent;
-  transition: background 0.12s;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background 0.15s ease;
 }
 
-.insight-item:hover {
+.briefing-item:last-child {
+  border-bottom: none;
+}
+
+.briefing-item:hover {
   background: var(--bg);
 }
 
-.insight-item--warning {
-  border-left-color: var(--yellow);
+.briefing-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
 }
 
-.insight-item--info {
-  border-left-color: var(--primary);
-}
+.briefing-item--red::before    { background: var(--red); }
+.briefing-item--yellow::before { background: var(--yellow); }
+.briefing-item--blue::before   { background: var(--primary); }
+.briefing-item--green::before  { background: var(--green); }
 
-.insight-item--success {
-  border-left-color: var(--green);
-}
-
-.insight-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-sm);
+.briefing-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,37 +97,92 @@
   margin-top: 1px;
 }
 
-.insight-icon--warning {
-  background: var(--yellow-light);
-  color: var(--yellow);
-}
+.briefing-item-icon--red    { background: var(--red-light);     color: var(--red);    border: 1px solid rgba(239,68,68,0.2); }
+.briefing-item-icon--yellow { background: var(--yellow-light);  color: var(--yellow); border: 1px solid rgba(245,158,11,0.2); }
+.briefing-item-icon--blue   { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(37,99,235,0.2); }
+.briefing-item-icon--green  { background: var(--green-light);   color: var(--green);  border: 1px solid rgba(16,185,129,0.2); }
 
-.insight-icon--info {
-  background: var(--primary-light);
-  color: var(--primary);
-}
-
-.insight-icon--success {
-  background: var(--green-light);
-  color: var(--green);
-}
-
-.insight-body {
+.briefing-item-body {
   display: flex;
   flex-direction: column;
   gap: 3px;
   min-width: 0;
 }
 
-.insight-item-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.3;
+.briefing-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1px;
 }
 
-.insight-desc {
+.briefing-item-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  border-radius: 3px;
+}
+
+.briefing-item-tag--red    { color: var(--red);     background: var(--red-light); }
+.briefing-item-tag--yellow { color: var(--yellow);  background: var(--yellow-light); }
+.briefing-item-tag--blue   { color: var(--primary); background: var(--primary-light); }
+.briefing-item-tag--green  { color: var(--green);   background: var(--green-light); }
+
+.briefing-item-title {
   font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.briefing-item-desc {
+  font-size: 11.5px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.55;
+  margin-top: 1px;
+}
+
+.briefing-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 52px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Skeleton */
+.briefing-item--skeleton {
+  border-bottom: 1px solid var(--border);
+}
+
+.briefing-skeleton-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
+  background: var(--border);
+  flex-shrink: 0;
+  animation: brief-pulse 1.4s ease-in-out infinite;
+}
+
+.briefing-skeleton-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.briefing-skeleton-tag   { height: 13px; width: 56px; background: var(--border); border-radius: 3px; animation: brief-pulse 1.4s ease-in-out infinite; }
+.briefing-skeleton-title { height: 14px; width: 75%; background: var(--border); border-radius: 3px; animation: brief-pulse 1.4s ease-in-out infinite; animation-delay: 0.1s; }
+.briefing-skeleton-desc  { height: 12px; width: 90%; background: var(--border); border-radius: 3px; animation: brief-pulse 1.4s ease-in-out infinite; animation-delay: 0.2s; }
+
+@keyframes brief-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }

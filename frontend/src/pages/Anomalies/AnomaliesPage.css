@@ -324,7 +324,7 @@ div.anom-card {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  background: var(--background, #f8fafc);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 12px;

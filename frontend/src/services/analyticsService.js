@@ -20,3 +20,9 @@ export const getHeatmap = () =>
 
 export const getHealthScore = () =>
   api.get('/analytics/health-score').then(r => r.data);
+
+// Consolidated payload for the dashboard landing page — replaces 7 separate
+// calls (health-score, overview, budget forecast, anomalies, category
+// breakdown, monthly trend, top merchants) with a single round trip.
+export const getDashboardOverview = () =>
+  api.get('/dashboard/overview').then(r => r.data);

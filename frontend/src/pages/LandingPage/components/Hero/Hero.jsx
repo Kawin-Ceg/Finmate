@@ -16,7 +16,7 @@ export default function Hero() {
         <div className="hero-text">
           <a href="/signup" className="hero-announce">
             <span className="hero-announce-dot" />
-            <span>Now in public beta</span>
+            <span>With MATE financial assistant!</span>
             <span className="hero-announce-arrow">→</span>
           </a>
 
@@ -44,11 +44,11 @@ export default function Hero() {
           </div>
 
           <p className="hero-trust">
-            No credit card required
+            
             <span className="hero-trust-dot" />
             No bank connection needed
             <span className="hero-trust-dot" />
-            Built for India
+            
           </p>
         </div>
 

@@ -1,6 +1,35 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import date, datetime
 from typing import Optional, List
+
+VALID_CATEGORIES = {
+    "Food", "Transport", "Shopping", "Utilities", "Health", "Insurance",
+    "Investment", "Income", "Education", "Rent", "Entertainment",
+    "Subscriptions", "Transfers", "Cash", "Other"
+}
+
+
+class CategoryFeedbackCreate(BaseModel):
+    corrected_category: str = Field(..., description="The correct category for this transaction")
+
+    def validate_category(self) -> None:
+        if self.corrected_category not in VALID_CATEGORIES:
+            from fastapi import HTTPException
+            raise HTTPException(
+                status_code=422,
+                detail=f"Invalid category. Must be one of: {sorted(VALID_CATEGORIES)}"
+            )
+
+
+class CategoryFeedbackResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    transaction_id: int
+    merchant_name: str
+    original_category: str
+    corrected_category: str
+    created_at: datetime
 
 
 class TransactionResponse(BaseModel):
@@ -23,6 +52,7 @@ class TransactionResponse(BaseModel):
 class TransactionUploadResponse(BaseModel):
     message: str
     transactions_imported: int
+    duplicates_skipped: int = 0
 
 
 class TransactionSummaryResponse(BaseModel):

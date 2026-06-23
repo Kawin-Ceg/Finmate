@@ -1,15 +1,15 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 from typing import List, Optional
 
 
 class BudgetCreate(BaseModel):
     category: str
-    monthly_limit: float
+    monthly_limit: float = Field(gt=0, description="Must be greater than 0")
 
 
 class BudgetUpdate(BaseModel):
-    monthly_limit: float
+    monthly_limit: float = Field(gt=0, description="Must be greater than 0")
 
 
 class BudgetResponse(BaseModel):
@@ -47,10 +47,15 @@ class BudgetForecastItem(BaseModel):
     budget: float
     current_spend: float
     projected_spend: float
+    lower_bound: float
+    upper_bound: float
+    exceed_probability: float
     expected_overrun: float
     risk: str
     daily_rate: float
     days_remaining: int
+    forecast_method: str
+    explanation: str
 
 
 class BudgetForecastResponse(BaseModel):

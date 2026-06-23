@@ -104,7 +104,6 @@ const Login = () => {
                 type="email"
                 id="email"
                 className="field-input"
-                placeholder="olivia@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -120,7 +119,7 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   className="field-input"
-                  placeholder="Enter password"
+                  placeholder="Enter the password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

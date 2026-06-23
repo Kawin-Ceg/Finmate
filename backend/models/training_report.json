@@ -1,6 +1,9 @@
 {
-  "algorithm": "XGBoost",
-  "accuracy": 0.691,
+  "algorithm": "LogisticRegression+PlattCalibration",
+  "model_version": "v2",
+  "accuracy": 0.6362,
+  "macro_f1": 0.6883,
+  "split_type": "group-aware (brand-held-out)",
   "categories": [
     "Cash",
     "Education",
@@ -19,100 +22,100 @@
     "Utilities"
   ],
   "num_categories": 15,
-  "num_training_samples": 711,
-  "num_test_samples": 178,
-  "trained_at": "2026-06-08T14:10:17.755655Z",
-  "dataset_path": "D:\\Finmate\\finmate\\backend\\data\\transactions_train.csv",
+  "num_training_samples": 8415,
+  "num_test_samples": 2207,
+  "trained_at": "2026-06-17T07:54:54.341148Z",
+  "dataset_path": "D:\\Finmate\\finmate\\backend\\data\\transactions_train_v2.csv",
   "per_class_metrics": {
     "Cash": {
-      "precision": 0.8,
-      "recall": 1.0,
-      "f1_score": 0.889,
-      "support": 8
-    },
-    "Education": {
       "precision": 0.857,
-      "recall": 0.667,
-      "f1_score": 0.75,
-      "support": 9
-    },
-    "Entertainment": {
-      "precision": 0.636,
-      "recall": 0.583,
-      "f1_score": 0.609,
+      "recall": 1.0,
+      "f1_score": 0.923,
       "support": 12
     },
+    "Education": {
+      "precision": 0.944,
+      "recall": 0.856,
+      "f1_score": 0.898,
+      "support": 195
+    },
+    "Entertainment": {
+      "precision": 0.749,
+      "recall": 0.641,
+      "f1_score": 0.691,
+      "support": 256
+    },
     "Food": {
-      "precision": 0.792,
-      "recall": 0.826,
-      "f1_score": 0.809,
-      "support": 23
+      "precision": 0.254,
+      "recall": 0.914,
+      "f1_score": 0.397,
+      "support": 139
     },
     "Health": {
-      "precision": 0.667,
-      "recall": 0.462,
-      "f1_score": 0.545,
-      "support": 13
+      "precision": 0.959,
+      "recall": 0.615,
+      "f1_score": 0.749,
+      "support": 226
     },
     "Income": {
-      "precision": 0.889,
-      "recall": 0.727,
-      "f1_score": 0.8,
-      "support": 11
-    },
-    "Insurance": {
-      "precision": 0.909,
-      "recall": 0.909,
-      "f1_score": 0.909,
-      "support": 11
-    },
-    "Investment": {
-      "precision": 1.0,
-      "recall": 0.778,
-      "f1_score": 0.875,
-      "support": 9
-    },
-    "Other": {
-      "precision": 0.333,
-      "recall": 0.286,
-      "f1_score": 0.308,
-      "support": 7
-    },
-    "Rent": {
-      "precision": 0.833,
-      "recall": 0.625,
-      "f1_score": 0.714,
-      "support": 8
-    },
-    "Shopping": {
-      "precision": 0.579,
-      "recall": 0.647,
-      "f1_score": 0.611,
-      "support": 17
-    },
-    "Subscriptions": {
-      "precision": 0.467,
-      "recall": 0.7,
-      "f1_score": 0.56,
+      "precision": 0.818,
+      "recall": 0.9,
+      "f1_score": 0.857,
       "support": 10
     },
+    "Insurance": {
+      "precision": 0.978,
+      "recall": 1.0,
+      "f1_score": 0.989,
+      "support": 89
+    },
+    "Investment": {
+      "precision": 0.922,
+      "recall": 0.5,
+      "f1_score": 0.648,
+      "support": 188
+    },
+    "Other": {
+      "precision": 0.974,
+      "recall": 0.974,
+      "f1_score": 0.974,
+      "support": 154
+    },
+    "Rent": {
+      "precision": 0.795,
+      "recall": 0.516,
+      "f1_score": 0.626,
+      "support": 128
+    },
+    "Shopping": {
+      "precision": 0.197,
+      "recall": 0.077,
+      "f1_score": 0.111,
+      "support": 181
+    },
+    "Subscriptions": {
+      "precision": 0.505,
+      "recall": 0.194,
+      "f1_score": 0.28,
+      "support": 258
+    },
     "Transfers": {
-      "precision": 0.75,
-      "recall": 0.667,
-      "f1_score": 0.706,
-      "support": 9
+      "precision": 0.595,
+      "recall": 0.978,
+      "f1_score": 0.74,
+      "support": 93
     },
     "Transport": {
-      "precision": 0.519,
-      "recall": 0.824,
-      "f1_score": 0.636,
-      "support": 17
+      "precision": 0.489,
+      "recall": 0.711,
+      "f1_score": 0.579,
+      "support": 159
     },
     "Utilities": {
-      "precision": 0.778,
-      "recall": 0.5,
-      "f1_score": 0.609,
-      "support": 14
+      "precision": 0.758,
+      "recall": 1.0,
+      "f1_score": 0.862,
+      "support": 119
     }
   }
 }

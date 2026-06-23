@@ -1,7 +1,8 @@
 import hashlib
 import os
-import random
+import secrets
 from datetime import datetime, timedelta
+from math import ceil
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
@@ -23,8 +24,13 @@ from app.utils.auth import create_access_token, hash_password, verify_password
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
+OTP_MAX_ATTEMPTS = 5
+OTP_LOCKOUT_MINUTES = 15
+
+
 def _gen_otp() -> str:
-    return str(random.randint(100000, 999999))
+    # Cryptographically secure 6-digit code (100000-999999)
+    return str(secrets.randbelow(900000) + 100000)
 
 
 def _token_hash(token: str) -> str:
@@ -123,6 +129,8 @@ def send_otp(
     current_user.otp_code = otp
     current_user.otp_expiry = datetime.utcnow() + timedelta(minutes=10)
     current_user.otp_sent_at = datetime.utcnow()
+    current_user.otp_failed_attempts = 0
+    current_user.otp_locked_until = None
     db.commit()
 
     sent = send_verification_otp(current_user.email, current_user.name, otp)
@@ -141,6 +149,13 @@ def verify_email(
     if current_user.email_verified:
         return {"message": "Email already verified."}
 
+    if current_user.otp_locked_until and datetime.utcnow() < current_user.otp_locked_until:
+        wait_minutes = ceil((current_user.otp_locked_until - datetime.utcnow()).total_seconds() / 60)
+        raise HTTPException(
+            status_code=429,
+            detail=f"Too many incorrect attempts. Try again in {wait_minutes} minute(s).",
+        )
+
     if not current_user.otp_code or not current_user.otp_expiry:
         raise HTTPException(status_code=400, detail="No verification code found. Request a new one.")
 
@@ -148,12 +163,28 @@ def verify_email(
         raise HTTPException(status_code=400, detail="Code has expired. Request a new one.")
 
     if current_user.otp_code != body.otp.strip():
-        raise HTTPException(status_code=400, detail="Incorrect verification code.")
+        current_user.otp_failed_attempts += 1
+        if current_user.otp_failed_attempts >= OTP_MAX_ATTEMPTS:
+            current_user.otp_locked_until = datetime.utcnow() + timedelta(minutes=OTP_LOCKOUT_MINUTES)
+            current_user.otp_failed_attempts = 0
+            db.commit()
+            raise HTTPException(
+                status_code=429,
+                detail=f"Too many incorrect attempts. Try again in {OTP_LOCKOUT_MINUTES} minutes.",
+            )
+        db.commit()
+        remaining = OTP_MAX_ATTEMPTS - current_user.otp_failed_attempts
+        raise HTTPException(
+            status_code=400,
+            detail=f"Incorrect verification code. {remaining} attempt(s) remaining.",
+        )
 
     current_user.email_verified = True
     current_user.verification_timestamp = datetime.utcnow()
     current_user.otp_code = None
     current_user.otp_expiry = None
+    current_user.otp_failed_attempts = 0
+    current_user.otp_locked_until = None
     db.commit()
 
     return {"message": "Email verified successfully."}

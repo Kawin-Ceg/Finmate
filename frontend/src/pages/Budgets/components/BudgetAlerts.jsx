@@ -15,6 +15,7 @@ const ALERT_STYLES = {
     bg: '#FEF2F2',
     border: '#FECACA',
     iconBg: '#FEE2E2',
+    textColor: '#7f1d1d',
   },
   warning: {
     Icon: TrendingUp,
@@ -22,6 +23,7 @@ const ALERT_STYLES = {
     bg: '#FFF7ED',
     border: '#FED7AA',
     iconBg: '#FFEDD5',
+    textColor: '#7c2d12',
   },
   info: {
     Icon: Info,
@@ -29,6 +31,7 @@ const ALERT_STYLES = {
     bg: '#FFFBEB',
     border: '#FDE68A',
     iconBg: '#FEF3C7',
+    textColor: '#78350f',
   },
 };
 
@@ -42,7 +45,7 @@ export default function BudgetAlerts({ alerts }) {
       <div className="alerts-list">
         {alerts.map((alert, i) => {
           const type = classifyAlert(alert);
-          const { Icon, color, bg, border, iconBg } = ALERT_STYLES[type];
+          const { Icon, color, bg, border, iconBg, textColor } = ALERT_STYLES[type];
           return (
             <div
               key={i}
@@ -52,7 +55,7 @@ export default function BudgetAlerts({ alerts }) {
               <div className="alert-icon" style={{ background: iconBg }}>
                 <Icon size={13} style={{ color }} strokeWidth={2} />
               </div>
-              <span className="alert-text">{alert}</span>
+              <span className="alert-text" style={{ color: textColor }}>{alert}</span>
             </div>
           );
         })}

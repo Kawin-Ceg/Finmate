@@ -12,7 +12,7 @@ export default function CTASection() {
             not just tracking it.
           </h2>
           <p className="cta-sub">
-            Join the beta and experience financial clarity powered by AI.
+            Experience financial clarity powered by AI.
             No spreadsheets. No manual tagging. Just insight.
           </p>
           <div className="cta-actions">
@@ -26,7 +26,7 @@ export default function CTASection() {
               Log in
             </a>
           </div>
-          <p className="cta-footnote">Free during beta · No credit card required</p>
+          <p className="cta-footnote"></p>
         </div>
       </div>
     </section>

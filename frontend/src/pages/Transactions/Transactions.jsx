@@ -8,7 +8,10 @@ import {
   getTransactionSummary,
   getCategories,
 } from '../../services/transactionService';
+import { useSettings } from '../../context/SettingsContext';
+import { formatCurrency, formatSignedCurrency, formatDateBySetting } from '../../utils/format';
 import './Transactions.css';
+import '../Dashboard/components/TransactionTable.css';
 
 const CATEGORY_COLORS = {
   Food: { bg: '#FEF3C7', color: '#92400E' },
@@ -43,28 +46,12 @@ const MONTHS = [
   { value: 12, label: 'December' },
 ];
 
-function formatDate(dateStr) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-IN', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-}
-
-function formatAmount(amount, type) {
-  const formatted = Number(amount).toLocaleString('en-IN', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  });
-  return type === 'credit' ? `+₹${formatted}` : `-₹${formatted}`;
-}
-
-function formatINR(value) {
-  if (value === null || value === undefined) return '₹—';
-  return `₹${Number(value).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
-}
-
 export default function Transactions() {
+  const { currency, dateFormat } = useSettings() || {};
+  const formatDate = (dateStr) => formatDateBySetting(dateStr, dateFormat);
+  const formatAmount = (amount, type) => formatSignedCurrency(amount, type, currency);
+  const formatINR = (value) => formatCurrency(value, currency);
+
   const [summary, setSummary] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState([]);

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { PrivacyProvider } from './context/PrivacyContext';
+import { SettingsProvider } from './context/SettingsContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Login from './pages/Login/Login';
@@ -14,6 +15,7 @@ import BudgetsPage from './pages/Budgets/BudgetsPage';
 import AnomaliesPage from './pages/Anomalies/AnomaliesPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 import SettingsPage from './pages/Settings/SettingsPage';
+import MatePage from './pages/Mate/MatePage';
 
 function AuthRoute({ children }) {
   const { user } = useAuth();
@@ -36,6 +38,7 @@ function AppRoutes() {
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="budgets" element={<BudgetsPage />} />
         <Route path="anomalies" element={<AnomaliesPage />} />
+        <Route path="mate" element={<MatePage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="settings" element={<SettingsPage />} />
       </Route>
@@ -49,9 +52,11 @@ function App() {
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <PrivacyProvider>
-            <AppRoutes />
-          </PrivacyProvider>
+          <SettingsProvider>
+            <PrivacyProvider>
+              <AppRoutes />
+            </PrivacyProvider>
+          </SettingsProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

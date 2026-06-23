@@ -1,3 +1,4 @@
+import secrets
 from passlib.context import CryptContext
 from jose import jwt
 from datetime import datetime, timedelta
@@ -10,6 +11,7 @@ load_dotenv(dotenv_path=env_path)
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
 
 pwd_context = CryptContext(
     schemes=["bcrypt"],
@@ -35,10 +37,13 @@ def create_access_token(data: dict):
 
     to_encode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(days=1)
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
     to_encode.update(
-        {"exp": expire}
+        # jti guarantees token uniqueness even if two logins happen within the
+        # same second for the same user (otherwise identical payload + exp
+        # would produce byte-identical JWTs, colliding in UserSession.token_hash).
+        {"exp": expire, "jti": secrets.token_hex(16)}
     )
 
     return jwt.encode(

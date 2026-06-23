@@ -155,7 +155,6 @@ const Signup = () => {
                 type="text"
                 value={form.name}
                 onChange={update('name')}
-                placeholder="John Doe"
                 required
               />
             </div>
@@ -167,7 +166,6 @@ const Signup = () => {
                 type="email"
                 value={form.email}
                 onChange={update('email')}
-                placeholder="john@example.com"
                 required
               />
             </div>
@@ -180,7 +178,7 @@ const Signup = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={form.password}
                   onChange={update('password')}
-                  placeholder="Create password"
+                  placeholder="Enter the Password"
                   required
                 />
                 <button
@@ -220,7 +218,7 @@ const Signup = () => {
                   type={showConfirm ? 'text' : 'password'}
                   value={form.confirm}
                   onChange={update('confirm')}
-                  placeholder="Confirm password"
+                  placeholder="Confirm the password"
                   required
                 />
                 <button

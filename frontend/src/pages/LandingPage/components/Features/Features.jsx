@@ -125,8 +125,8 @@ const FEATURES = [
             />
           </svg>
           <div className="fpt-score-center">
-            <span className="fpt-score-num">847</span>
-            <span className="fpt-score-lbl">/ 1000</span>
+            <span className="fpt-score-num">87</span>
+            <span className="fpt-score-lbl">/ 100</span>
           </div>
         </div>
         <span className="fpt-score-badge">Excellent</span>

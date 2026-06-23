@@ -17,14 +17,14 @@ import {
   getHeatmap,
   getHealthScore,
 } from '../../services/analyticsService';
+import { useSettings } from '../../context/SettingsContext';
+import { formatCurrency } from '../../utils/format';
 import './AnalyticsPage.css';
 
-function formatINR(value) {
-  if (value === null || value === undefined) return '₹—';
-  return `₹${Number(value).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
-}
-
 export default function AnalyticsPage() {
+  const { currency } = useSettings() || {};
+  const formatINR = (value) => formatCurrency(value, currency);
+
   const [overview, setOverview] = useState(null);
   const [monthlyTrend, setMonthlyTrend] = useState([]);
   const [categoryBreakdown, setCategoryBreakdown] = useState([]);

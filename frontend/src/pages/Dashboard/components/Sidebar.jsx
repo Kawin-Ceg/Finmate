@@ -1,8 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, ArrowLeftRight, Wallet, BarChart2,
-  AlertTriangle, Zap, Settings, LogOut, ChevronLeft, ChevronRight,
-  User,
+  AlertTriangle, MessageCircle, Settings, LogOut, ChevronLeft, ChevronRight, User,
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useSidebar } from '../../../context/SidebarContext';
@@ -14,7 +13,7 @@ const NAV_ITEMS = [
   { to: '/dashboard/budgets', icon: Wallet, label: 'Budgets' },
   { to: '/dashboard/analytics', icon: BarChart2, label: 'Analytics' },
   { to: '/dashboard/anomalies', icon: AlertTriangle, label: 'Anomalies' },
-  { to: '/dashboard/insights', icon: Zap, label: 'AI Insights' },
+  { to: '/dashboard/mate', icon: MessageCircle, label: 'Mate' },
 ];
 
 const BOTTOM_ITEMS = [

@@ -6,21 +6,21 @@ const STEPS = [
     title: 'Upload your statement',
     description:
       'Export a PDF or CSV from your bank app. No account linking, no OAuth — just upload the file directly.',
-    detail: 'Supports all major Indian banks: SBI, HDFC, ICICI, Axis, Kotak, and more.',
+    detail: 'Pdf option under development, CSV supports all major Indian banks with auto-mapping of columns.',
   },
   {
     num: '02',
     title: 'Auto-categorization',
     description:
       'FinMate\'s ML model reads every transaction and assigns it to one of 12+ spending categories in seconds.',
-    detail: '95%+ accuracy on Indian merchant names with continuous improvement.',
+    detail: '80%+ accuracy on Indian merchant names with continuous improvement.',
   },
   {
     num: '03',
     title: 'AI analysis',
     description:
       'Patterns are extracted, budgets are computed, anomalies are flagged, and your financial health score is calculated.',
-    detail: 'Powered by Isolation Forest for anomaly detection and FAISS-based vector retrieval.',
+    detail: 'Powered by Isolation Forest for anomaly detection and your own financial memory serves as knowledge base.',
   },
   {
     num: '04',

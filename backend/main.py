@@ -1,12 +1,14 @@
 import logging
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
-from app.models import User, Transaction, Budget, Anomaly, UserSettings, UserSession  # noqa: F401
+from app.models import User, Transaction, Budget, Anomaly, UserSettings, UserSession, ChatSession, ChatMessage  # noqa: F401
 from app.database.database import Base, engine
 from app.routes.auth import router as auth_router
 from app.routes.test import router as test_router
@@ -19,9 +21,24 @@ from app.routes.profile import router as profile_router
 from app.routes.settings_route import router as settings_router
 from app.routes.security import router as security_router
 from app.routes.account import router as account_router
+from app.routes.mate import router as mate_router
+from app.routes.dashboard import router as dashboard_router
 from app.services.ml_categorizer import load_model
 
+load_dotenv(dotenv_path=Path(__file__).parent / ".env")
+
 logger = logging.getLogger(__name__)
+
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development").strip().lower()
+_cors_origins_env = os.getenv("CORS_ORIGINS", "").strip()
+
+if _cors_origins_env:
+    CORS_ORIGINS = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
+elif ENVIRONMENT == "production":
+    CORS_ORIGINS = []
+    logger.warning("ENVIRONMENT=production but CORS_ORIGINS is not set — all cross-origin requests will be blocked.")
+else:
+    CORS_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
 STATIC_DIR = Path(__file__).parent / "static"
 STATIC_DIR.mkdir(exist_ok=True)
@@ -43,6 +60,19 @@ def _ensure_ml_columns():
         logger.warning("Could not add ML columns: %s", exc)
 
 
+def _ensure_chat_columns():
+    stmts = [
+        "ALTER TABLE chat_sessions ADD COLUMN IF NOT EXISTS session_summary TEXT",
+    ]
+    try:
+        with engine.connect() as conn:
+            for stmt in stmts:
+                conn.execute(text(stmt))
+            conn.commit()
+    except Exception as exc:
+        logger.warning("Could not add chat columns: %s", exc)
+
+
 def _ensure_user_columns():
     stmts = [
         "ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url VARCHAR(500)",
@@ -52,6 +82,8 @@ def _ensure_user_columns():
         "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_code VARCHAR(10)",
         "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_expiry TIMESTAMP",
         "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_sent_at TIMESTAMP",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_failed_attempts INTEGER DEFAULT 0 NOT NULL",
+        "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_locked_until TIMESTAMP",
         "ALTER TABLE users ADD COLUMN IF NOT EXISTS verification_timestamp TIMESTAMP",
     ]
     try:
@@ -66,13 +98,14 @@ def _ensure_user_columns():
 Base.metadata.create_all(bind=engine)
 _ensure_ml_columns()
 _ensure_user_columns()
+_ensure_chat_columns()
 load_model()
 
 app = FastAPI(title="FinMate API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -91,6 +124,8 @@ app.include_router(profile_router)
 app.include_router(settings_router)
 app.include_router(security_router)
 app.include_router(account_router)
+app.include_router(mate_router)
+app.include_router(dashboard_router)
 
 
 @app.get("/")

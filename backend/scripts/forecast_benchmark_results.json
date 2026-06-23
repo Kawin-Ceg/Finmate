@@ -1,0 +1,203 @@
+{
+  "day_7": {
+    "summary": {
+      "LinearDailyRate": 54.03,
+      "HistoricalPrior(3mo)": 13.06,
+      "Blended(60/40)": 34.78,
+      "LightGBM": 10.19,
+      "XGBoost": 10.8
+    },
+    "per_category": {
+      "Food": {
+        "LinearDailyRate": 7.51,
+        "LightGBM": 11.89
+      },
+      "Transport": {
+        "LinearDailyRate": 5.68,
+        "LightGBM": 7.07
+      },
+      "Shopping": {
+        "LinearDailyRate": 5.25,
+        "LightGBM": 6.86
+      },
+      "Utilities": {
+        "LinearDailyRate": 5.68,
+        "LightGBM": 6.55
+      },
+      "Health": {
+        "LinearDailyRate": 10.97,
+        "LightGBM": 8.22
+      },
+      "Insurance": {
+        "LinearDailyRate": 334.52,
+        "LightGBM": 28.62
+      },
+      "Investment": {
+        "LinearDailyRate": 7.09,
+        "LightGBM": 7.31
+      },
+      "Education": {
+        "LinearDailyRate": 6.89,
+        "LightGBM": 6.4
+      },
+      "Rent": {
+        "LinearDailyRate": 334.52,
+        "LightGBM": 10.26
+      },
+      "Entertainment": {
+        "LinearDailyRate": 6.95,
+        "LightGBM": 8.8
+      },
+      "Subscriptions": {
+        "LinearDailyRate": 7.12,
+        "LightGBM": 12.7
+      },
+      "Transfers": {
+        "LinearDailyRate": 6.53,
+        "LightGBM": 7.68
+      },
+      "Cash": {
+        "LinearDailyRate": 9.45,
+        "LightGBM": 11.13
+      },
+      "Other": {
+        "LinearDailyRate": 8.26,
+        "LightGBM": 9.17
+      }
+    }
+  },
+  "day_15": {
+    "summary": {
+      "LinearDailyRate": 17.93,
+      "HistoricalPrior(3mo)": 13.06,
+      "Blended(60/40)": 13.79,
+      "LightGBM": 7.89,
+      "XGBoost": 8.43
+    },
+    "per_category": {
+      "Food": {
+        "LinearDailyRate": 3.28,
+        "LightGBM": 6.53
+      },
+      "Transport": {
+        "LinearDailyRate": 3.39,
+        "LightGBM": 4.89
+      },
+      "Shopping": {
+        "LinearDailyRate": 4.3,
+        "LightGBM": 7.51
+      },
+      "Utilities": {
+        "LinearDailyRate": 4.48,
+        "LightGBM": 6.36
+      },
+      "Health": {
+        "LinearDailyRate": 3.96,
+        "LightGBM": 7.75
+      },
+      "Insurance": {
+        "LinearDailyRate": 102.78,
+        "LightGBM": 13.5
+      },
+      "Investment": {
+        "LinearDailyRate": 4.64,
+        "LightGBM": 6.74
+      },
+      "Education": {
+        "LinearDailyRate": 4.01,
+        "LightGBM": 7.44
+      },
+      "Rent": {
+        "LinearDailyRate": 102.78,
+        "LightGBM": 10.04
+      },
+      "Entertainment": {
+        "LinearDailyRate": 2.73,
+        "LightGBM": 3.88
+      },
+      "Subscriptions": {
+        "LinearDailyRate": 3.83,
+        "LightGBM": 15.19
+      },
+      "Transfers": {
+        "LinearDailyRate": 2.77,
+        "LightGBM": 4.71
+      },
+      "Cash": {
+        "LinearDailyRate": 3.24,
+        "LightGBM": 6.16
+      },
+      "Other": {
+        "LinearDailyRate": 4.81,
+        "LightGBM": 9.77
+      }
+    }
+  },
+  "day_22": {
+    "summary": {
+      "LinearDailyRate": 7.7,
+      "HistoricalPrior(3mo)": 13.06,
+      "Blended(60/40)": 7.92,
+      "LightGBM": 5.7,
+      "XGBoost": 5.56
+    },
+    "per_category": {
+      "Food": {
+        "LinearDailyRate": 2.13,
+        "LightGBM": 2.9
+      },
+      "Transport": {
+        "LinearDailyRate": 2.8,
+        "LightGBM": 3.52
+      },
+      "Shopping": {
+        "LinearDailyRate": 2.83,
+        "LightGBM": 4.65
+      },
+      "Utilities": {
+        "LinearDailyRate": 2.46,
+        "LightGBM": 4.08
+      },
+      "Health": {
+        "LinearDailyRate": 2.85,
+        "LightGBM": 3.55
+      },
+      "Insurance": {
+        "LinearDailyRate": 38.26,
+        "LightGBM": 10.06
+      },
+      "Investment": {
+        "LinearDailyRate": 2.95,
+        "LightGBM": 6.39
+      },
+      "Education": {
+        "LinearDailyRate": 3.12,
+        "LightGBM": 6.06
+      },
+      "Rent": {
+        "LinearDailyRate": 38.26,
+        "LightGBM": 10.69
+      },
+      "Entertainment": {
+        "LinearDailyRate": 2.84,
+        "LightGBM": 3.66
+      },
+      "Subscriptions": {
+        "LinearDailyRate": 2.4,
+        "LightGBM": 13.71
+      },
+      "Transfers": {
+        "LinearDailyRate": 1.92,
+        "LightGBM": 3.41
+      },
+      "Cash": {
+        "LinearDailyRate": 2.25,
+        "LightGBM": 4.37
+      },
+      "Other": {
+        "LinearDailyRate": 2.69,
+        "LightGBM": 2.7
+      }
+    }
+  }
+}

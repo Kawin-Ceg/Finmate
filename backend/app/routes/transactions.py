@@ -12,7 +12,10 @@ from app.database.dependencies import get_db
 from app.dependencies import get_current_user
 from app.models.transaction import Transaction
 from app.models.user import User
+from app.models.category_feedback import CategoryFeedback
 from app.schemas.transaction import (
+    CategoryFeedbackCreate,
+    CategoryFeedbackResponse,
     TransactionListResponse,
     TransactionSummaryResponse,
     TransactionUploadResponse,
@@ -150,7 +153,15 @@ async def upload_transactions(
             detail="CSV must have an 'amount' column, or separate 'debit' and 'credit' columns."
         )
 
+    existing_signatures = {
+        (d, (m or "").strip().lower(), round(a, 2))
+        for d, m, a in db.query(
+            Transaction.date, Transaction.merchant, Transaction.amount
+        ).filter(Transaction.user_id == current_user.id)
+    }
+
     imported = 0
+    duplicates_skipped = 0
     parse_errors = []
 
     for row_num, row in enumerate(reader, start=2):
@@ -187,6 +198,12 @@ async def upload_transactions(
             if abs_amount == 0:
                 continue
 
+            signature = (txn_date, merchant.strip().lower(), round(abs_amount, 2))
+            if signature in existing_signatures:
+                duplicates_skipped += 1
+                continue
+            existing_signatures.add(signature)
+
             cat_result = categorize_with_confidence(merchant, description or "")
 
             transaction = Transaction(
@@ -209,7 +226,7 @@ async def upload_transactions(
             parse_errors.append(f"Row {row_num}: {exc}")
             continue
 
-    if imported == 0:
+    if imported == 0 and duplicates_skipped == 0:
         db.rollback()
         detail = "No valid transactions found in the file."
         if parse_errors:
@@ -218,15 +235,24 @@ async def upload_transactions(
 
     db.commit()
 
-    try:
-        run_anomaly_detection(current_user.id, db)
-    except Exception as exc:
-        import logging
-        logging.getLogger(__name__).warning("Anomaly detection failed after upload: %s", exc)
+    if imported > 0:
+        try:
+            run_anomaly_detection(current_user.id, db)
+        except Exception as exc:
+            import logging
+            logging.getLogger(__name__).warning("Anomaly detection failed after upload: %s", exc)
+
+    if imported == 0:
+        message = f"All {duplicates_skipped} row(s) already exist — nothing new imported."
+    elif duplicates_skipped > 0:
+        message = f"Upload successful — {imported} imported, {duplicates_skipped} duplicate(s) skipped."
+    else:
+        message = "Upload successful"
 
     return TransactionUploadResponse(
-        message="Upload successful",
-        transactions_imported=imported
+        message=message,
+        transactions_imported=imported,
+        duplicates_skipped=duplicates_skipped,
     )
 
 
@@ -347,3 +373,48 @@ def get_transactions(
         limit=limit,
         total_pages=ceil(total / limit) if total > 0 else 1
     )
+
+
+@router.post("/{transaction_id}/feedback", response_model=CategoryFeedbackResponse)
+def submit_category_feedback(
+    transaction_id: int,
+    payload: CategoryFeedbackCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Record a user correction on a transaction's ML-assigned category."""
+    payload.validate_category()
+
+    txn = db.query(Transaction).filter(
+        Transaction.id == transaction_id,
+        Transaction.user_id == current_user.id,
+    ).first()
+    if txn is None:
+        raise HTTPException(status_code=404, detail="Transaction not found.")
+
+    if txn.category == payload.corrected_category:
+        raise HTTPException(
+            status_code=400,
+            detail="Corrected category is the same as the current category — no change needed."
+        )
+
+    original_category = txn.category
+
+    # Update the transaction's category immediately
+    txn.category = payload.corrected_category
+    txn.categorization_method = "user_corrected"
+
+    # Record the correction for future model retraining
+    feedback = CategoryFeedback(
+        user_id=current_user.id,
+        transaction_id=transaction_id,
+        merchant_name=txn.merchant,
+        original_category=original_category,
+        corrected_category=payload.corrected_category,
+        model_confidence=txn.prediction_confidence,
+        model_version="v2",
+    )
+    db.add(feedback)
+    db.commit()
+    db.refresh(feedback)
+    return feedback

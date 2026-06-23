@@ -1,0 +1,53 @@
+{
+  "model": "LogisticRegression",
+  "results": [
+    {
+      "threshold": 0.0,
+      "mean_coverage": 1.0,
+      "mean_fallback_rate": 0.0,
+      "mean_accuracy_on_covered": 0.6711,
+      "std_accuracy_on_covered": 0.0466,
+      "mean_macro_f1_on_covered": 0.6532
+    },
+    {
+      "threshold": 0.4,
+      "mean_coverage": 0.7758,
+      "mean_fallback_rate": 0.2242,
+      "mean_accuracy_on_covered": 0.7875,
+      "std_accuracy_on_covered": 0.0458,
+      "mean_macro_f1_on_covered": 0.735
+    },
+    {
+      "threshold": 0.5,
+      "mean_coverage": 0.6669,
+      "mean_fallback_rate": 0.3331,
+      "mean_accuracy_on_covered": 0.8374,
+      "std_accuracy_on_covered": 0.0396,
+      "mean_macro_f1_on_covered": 0.776
+    },
+    {
+      "threshold": 0.6,
+      "mean_coverage": 0.5939,
+      "mean_fallback_rate": 0.4061,
+      "mean_accuracy_on_covered": 0.8801,
+      "std_accuracy_on_covered": 0.0249,
+      "mean_macro_f1_on_covered": 0.8181
+    },
+    {
+      "threshold": 0.7,
+      "mean_coverage": 0.5298,
+      "mean_fallback_rate": 0.4702,
+      "mean_accuracy_on_covered": 0.9127,
+      "std_accuracy_on_covered": 0.0477,
+      "mean_macro_f1_on_covered": 0.851
+    },
+    {
+      "threshold": 0.8,
+      "mean_coverage": 0.4645,
+      "mean_fallback_rate": 0.5355,
+      "mean_accuracy_on_covered": 0.9508,
+      "std_accuracy_on_covered": 0.0339,
+      "mean_macro_f1_on_covered": 0.8806
+    }
+  ]
+}

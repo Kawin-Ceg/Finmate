@@ -23,6 +23,8 @@ class User(Base):
     otp_code = Column(String(10), nullable=True)
     otp_expiry = Column(DateTime, nullable=True)
     otp_sent_at = Column(DateTime, nullable=True)
+    otp_failed_attempts = Column(Integer, default=0, nullable=False)
+    otp_locked_until = Column(DateTime, nullable=True)
     verification_timestamp = Column(DateTime, nullable=True)
 
     created_at = Column(DateTime, server_default=func.now())
@@ -51,6 +53,11 @@ class User(Base):
     )
     sessions = relationship(
         "UserSession",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    chat_sessions = relationship(
+        "ChatSession",
         back_populates="user",
         cascade="all, delete-orphan",
     )

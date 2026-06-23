@@ -15,12 +15,12 @@ from app.schemas.analytics import (
     TopMerchantsResponse,
 )
 from app.services.analytics_service import (
-    get_cashflow,
-    get_category_breakdown,
-    get_heatmap,
-    get_monthly_trend,
-    get_overview,
-    get_top_merchants,
+    get_cashflow_sql,
+    get_category_breakdown_sql,
+    get_heatmap_sql,
+    get_monthly_trend_sql,
+    get_overview_sql,
+    get_top_merchants_sql,
 )
 from app.services.health_score_service import compute_health_score
 
@@ -36,7 +36,7 @@ def analytics_overview(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    return get_overview(_user_transactions(current_user, db))
+    return get_overview_sql(current_user.id, db)
 
 
 @router.get("/monthly-trend", response_model=MonthlyTrendResponse)
@@ -44,7 +44,7 @@ def analytics_monthly_trend(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    return {"data": get_monthly_trend(_user_transactions(current_user, db))}
+    return {"data": get_monthly_trend_sql(current_user.id, db)}
 
 
 @router.get("/category-breakdown", response_model=CategoryBreakdownResponse)
@@ -52,7 +52,7 @@ def analytics_category_breakdown(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    return {"data": get_category_breakdown(_user_transactions(current_user, db))}
+    return {"data": get_category_breakdown_sql(current_user.id, db)}
 
 
 @router.get("/top-merchants", response_model=TopMerchantsResponse)
@@ -60,7 +60,7 @@ def analytics_top_merchants(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    return {"data": get_top_merchants(_user_transactions(current_user, db))}
+    return {"data": get_top_merchants_sql(current_user.id, db)}
 
 
 @router.get("/cashflow", response_model=CashflowResponse)
@@ -68,7 +68,7 @@ def analytics_cashflow(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    return {"data": get_cashflow(_user_transactions(current_user, db))}
+    return {"data": get_cashflow_sql(current_user.id, db)}
 
 
 @router.get("/heatmap", response_model=HeatmapResponse)
@@ -76,7 +76,7 @@ def analytics_heatmap(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    return {"data": get_heatmap(_user_transactions(current_user, db))}
+    return {"data": get_heatmap_sql(current_user.id, db)}
 
 
 @router.get("/health-score", response_model=HealthScoreResponse)
